@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="spel.css" />
+</head>
+<body>
+    <div class="container">
+        <div id="loading"></div>
+        <div id="spel" class="justify-center flex-column hidden">
+            <div id="hud">
+                <div id="hud-item">
+                    <p class="hud-prefix">
+                       Question
+                    </p>            
+                    <h1 class="hud-main-text" id="questionCounter"> 
+                    </h1>                    
+                </div>
+                <div id="hud-item">
+                    <h1></h1>
+                
+
+                    <progress id="myProgress" max="100" value="0"></progress>
+                </div>
+                <div id="hud-item">
+                    <p class="hud-prefix">
+                       Score
+                    </p>
+                    <h1 class="hud-main-text" id='score'>
+                        0
+                    </h1>
+                </div>
+            </div>
+            <h2 id="question"></h2>
+            <div class="choice-container">
+                <p class="choice-prefix">A</p>
+                <p class="choice-text" data-number="1"></p>
+            </div>
+    
+            <div class="choice-container">
+                <p class="choice-prefix">B</p>
+                <p class="choice-text" data-number="2"></p>
+            </div>
+            
+            <div class="choice-container">
+                <p class="choice-prefix">C</p>
+                <p class="choice-text" data-number="3"></p>
+            </div>
+            
+            <div class="choice-container">
+                <p class="choice-prefix">D</p>
+                <p class="choice-text" data-number="4"></p>
+            </div>
+        </div>
+    </div>
+    <script src="spel.js"></script>
+</body>
+</html>
