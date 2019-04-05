@@ -4,27 +4,31 @@ const questionCounterText = document.getElementById('questionCounter');
 const scoreText = document.getElementById('score');
 const loader = document.getElementById('loading');
 const spel = document.getElementById('spel');
-
+var data;
 
 let currentQuestion = {};
 let acceptingAnswers = false;
-let scor = 0;
+let score = 0;
 let questionCounter = 0;
 let availabeQuestions = [];
+var xhr = new XMLHttpRequest();
+
+xhr.onreadystatechange = function(){
+    if(xhr.readyState == 4 && xhr.status == 200){
+        loaded = xhr.response;
+
+        loadedQuestions();
+    }
+}
+
+xhr.open("GET", "https://opentdb.com/api.php?amount=10&category=11&difficulty=medium&type=multiple")
+xhr.responseType = "json";
+xhr.send();
 
 
-
-
-
-fetch("https://opentdb.com/api.php?amount=10&category=11&difficulty=medium&type=multiple")
-
-.then(res => {
-    return res.json();
-})
-
-.then(loadedQuestions => {
-    console.log(loadedQuestions);
-    questions = loadedQuestions.results.map(loadedQuestion => {
+loadedQuestions = ()=> {
+    console.log(loaded);
+    questions = loaded.results.map(loadedQuestion => {
         const formattedQuestion = {
             question: loadedQuestion.question
         };
@@ -42,11 +46,7 @@ fetch("https://opentdb.com/api.php?amount=10&category=11&difficulty=medium&type=
     });
     
     startGame();
-})
-
-.catch(err => {
-    console.error(err);
-});
+}
 
 
 const KORREKT_SVAR = 10;
@@ -77,10 +77,10 @@ getNewQuestion = () => {
 
     const questionIndex = Math.floor(Math.random() * availabeQuestions.length);
     currentQuestion = availabeQuestions[questionIndex];
-    question.innerText = currentQuestion.question;
+    question.innerHTML = currentQuestion.question;
     choices.forEach(choice => {
         const number = choice.dataset['number'];
-        choice.innerText = currentQuestion['choice' + number];
+        choice.innerHTML = currentQuestion['choice' + number];
     });
 
     availabeQuestions.splice(questionIndex, 1);
