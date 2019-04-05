@@ -4,7 +4,6 @@ const questionCounterText = document.getElementById('questionCounter');
 const scoreText = document.getElementById('score');
 const loader = document.getElementById('loading');
 const spel = document.getElementById('spel');
-var data;
 
 let currentQuestion = {};
 let acceptingAnswers = false;
@@ -27,7 +26,6 @@ xhr.send();
 
 
 loadedQuestions = ()=> {
-    console.log(loaded);
     questions = loaded.results.map(loadedQuestion => {
         const formattedQuestion = {
             question: loadedQuestion.question
@@ -49,14 +47,14 @@ loadedQuestions = ()=> {
 }
 
 
-const KORREKT_SVAR = 10;
-const MAX_FRÅGOR = 5;
+const KORREKT_SVAR = 10; //Bestämmer antal poäng för korrekt svar
+const MAX_FRÅGOR = 10; //Bestämmer antal frågor
 startGame = () => {
     questionCounter =0;
     score = 0;
     availabeQuestions = [...questions];
-    spel.classList.remove('hidden');
-    loader.classList.add('hidden');
+    spel.classList.remove('hidden'); //Visar spelplanen
+    loader.classList.add('hidden'); //Döljer loader
     getNewQuestion();
 };
 
@@ -70,7 +68,7 @@ getNewQuestion = () => {
 
     questionCounter++;
     questionCounterText.innerText = questionCounter + "/" + MAX_FRÅGOR;
-    document.getElementById("myProgress").value = (questionCounter / MAX_FRÅGOR)* 100;
+    document.getElementById("myProgress").value = (questionCounter / MAX_FRÅGOR)* 100;//Ökar progressbar
     
     
 
@@ -83,29 +81,29 @@ getNewQuestion = () => {
         choice.innerHTML = currentQuestion['choice' + number];
     });
 
-    availabeQuestions.splice(questionIndex, 1);
+    availabeQuestions.splice(questionIndex, 1); // Tar bort frågan från availableQuestions arrayen
 
-    acceptingAnswers = true;
+    acceptingAnswers = true; // Man får ta emot frågor igen
 };
 
 choices.forEach(choice => {
     choice.addEventListener('click', e => {
-        if(!acceptingAnswers) return;
+        if(!acceptingAnswers){ return};
 
-        acceptingAnswers = false;
-        const selectedChoice = e.target;
+        acceptingAnswers = false;// Man får inte svara på samma fråga igen
+        const selectedChoice = e.target; 
         const selectedAnswer = selectedChoice.dataset["number"];
 
         const classToApply = 
-            selectedAnswer == currentQuestion.answer ? 'correct' : 'incorrect';
+            selectedAnswer == currentQuestion.answer ? 'correct' : 'incorrect';//Avgör vilken klass som skall användas
 
         if(classToApply == 'correct') {
-            incrementScore(KORREKT_SVAR);
+            increaseScore(KORREKT_SVAR);
         }
         
         selectedChoice.parentElement.classList.add(classToApply);
 
-        setTimeout(() => {
+        setTimeout(() => { //Väntar i en sekund för att programmet skall vara snyggt och inte ladda nästa fråga direkt
         selectedChoice.parentElement.classList.remove(classToApply);
 
         getNewQuestion();
@@ -113,7 +111,7 @@ choices.forEach(choice => {
     });
 });
 
-incrementScore = num => {
+increaseScore = num => { //Hanterar poängräkning
     score +=num;
     scoreText.innerText = score;
 }
