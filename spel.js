@@ -68,7 +68,7 @@ getNewQuestion = () => {
 
     questionCounter++;
     questionCounterText.innerText = questionCounter + "/" + MAX_FRÅGOR;
-    document.getElementById("myProgress").value = (questionCounter / MAX_FRÅGOR)* 100;//Ökar progressbar
+    //document.getElementById("myProgress").value = (questionCounter / MAX_FRÅGOR)* 100;//Ökar progressbar
     
     
 
@@ -93,6 +93,7 @@ choices.forEach(choice => {
         acceptingAnswers = false;// Man får inte svara på samma fråga igen
         const selectedChoice = e.target; 
         const selectedAnswer = selectedChoice.dataset["number"];
+        document.getElementById("myProgress").value = (questionCounter / MAX_FRÅGOR)* 100;//Ökar progressbar
 
         const classToApply = 
             selectedAnswer == currentQuestion.answer ? 'correct' : 'incorrect';//Avgör vilken klass som skall användas
